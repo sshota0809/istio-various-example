@@ -44,6 +44,8 @@ metadata:
   namespace: example
 spec:
   host: google.com
+  exportTo:
+    - "."
   trafficPolicy:
     portLevelSettings:
     - port:
