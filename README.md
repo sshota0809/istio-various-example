@@ -1,0 +1,1 @@
+This repository is useful sample manifests for me.

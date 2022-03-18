@@ -1,0 +1,53 @@
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+  name: example-serviceentry
+  namespace: example
+spec:
+  hosts:
+  - google.com
+  location: MESH_EXTERNAL
+  exportTo:
+  - "."
+  ports:
+  - name: https
+    number: 443
+    protocol: HTTPS
+  resolution: DNS
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: example-virtualservice
+  namespace: example
+spec:
+  hosts:
+  - google.com
+  gateways:
+  - mesh
+  exportTo:
+  - "."
+  http:
+  - match:
+    - port: 80
+    route:
+    - destination:
+        host: google.com
+        port:
+          number: 443
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: example-destinationrule
+  namespace: example
+spec:
+  host: google.com
+  trafficPolicy:
+    portLevelSettings:
+    - port:
+        number: 443
+      tls:
+        mode: SIMPLE
+

@@ -1,0 +1,1 @@
+This example is useful when Istio collects metrics and trace datas for external HTTPS endpoint. Istio can't collects them by default because they are encrypted.
