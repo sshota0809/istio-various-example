@@ -1,0 +1,1 @@
+This example is useful when Istio adds HTTP header to its request against backend container based on Host header.
