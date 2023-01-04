@@ -1,0 +1,41 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: example-destinationrule
+spec:
+  host: svc-name.ns-name.svc.cluster.local
+  subsets:
+    - name: blue
+      labels:
+        version: blue
+    - name: green
+      labels:
+        version: green
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: example-virtualservice
+spec:
+  gateways:
+    - default/default-gateway
+    - mesh
+  hosts:
+    - svc-name.ns-name.svc.cluster.local
+  http:
+    - match:
+        - headers:
+            header-key:
+              exact: "header-value"
+      route:
+        - destination:
+            host: svc-name.ns-name.svc.cluster.local
+            subset: blue
+            port:
+              number: port-number
+    - route:
+        - destination:
+            host: svc-name.ns-name.svc.cluster.local
+            subset: green
+            port:
+              number: port-number

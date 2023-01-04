@@ -1,0 +1,1 @@
+This example is useful when you deploy your applications by blue-green deployment.
